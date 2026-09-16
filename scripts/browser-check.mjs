@@ -69,6 +69,7 @@ for (const width of [1440, 390]) {
   await page.locator('#name').fill('Local Review');
   await page.locator('#email').fill('review@example.test');
   await page.locator('#challenge').fill('Growth & clarity + a new direction.');
+  let expectedWebsite = '';
   let mode = 'http-error';
   let posts = 0;
   await page.route(baseUrl + '/', async route => {
@@ -80,6 +81,7 @@ for (const width of [1440, 390]) {
     assert.equal(data.get('challenge'), 'Growth & clarity + a new direction.');
     assert.equal(data.get('interest'), 'Matchbook Social');
     assert.equal(data.get('fax'), '');
+    assert.equal(data.get('website'), expectedWebsite);
     assert.match(route.request().headers()['content-type'], /application\/x-www-form-urlencoded/);
     if (mode === 'network-error') return route.abort('failed');
     return route.fulfill({ status: mode === 'success' ? 200 : 500, body: '' });
@@ -91,6 +93,32 @@ for (const width of [1440, 390]) {
     assert.equal(await send.isEnabled(), true);
     await page.screenshot({ path: `.qa/contact-error-${width}.png`, fullPage: true });
   }
+
+  const website = page.locator('#website');
+  for (const invalid of ['javascript:alert(1)', 'ftp://example.com', 'data:text/plain,test', 'not-a-domain', 'https://example.com:99999']) {
+    await website.fill(invalid);
+    const before = posts;
+    await send.click();
+    assert.equal(await website.evaluate(el => el.checkValidity()), false);
+    assert.equal(posts, before);
+  }
+  mode = 'http-error';
+  for (const [value, normalized] of [
+    ['example.com', 'https://example.com/'],
+    ['www.example.com', 'https://www.example.com/'],
+    ['https://example.com', 'https://example.com/'],
+    ['http://example.com', 'http://example.com/'],
+    ['example.com/about?source=contact', 'https://example.com/about?source=contact'],
+    ['', ''],
+  ]) {
+    expectedWebsite = normalized;
+    await website.fill(value);
+    await send.click();
+    await page.waitForFunction(() => document.querySelector('#form-status').textContent.includes('couldn’t confirm'));
+    assert.equal(await website.evaluate(el => el.checkValidity()), true);
+  }
+  await website.fill('example.com');
+  expectedWebsite = 'https://example.com/';
   const beforeSpam = posts;
   await page.locator('#fax').fill('spam');
   await send.click();
@@ -100,7 +128,7 @@ for (const width of [1440, 390]) {
   await send.click();
   await page.waitForURL('**/thank-you/');
   assert.match(await page.locator('h1').textContent(), /Message received/);
-  assert.equal(posts, 3);
+  assert.equal(posts, 9);
   await page.unroute(baseUrl + '/');
 }
 // Native HTML fallback still submits when JavaScript is disabled.

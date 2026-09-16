@@ -89,7 +89,12 @@ import Photo from '../components/Photo.astro';
             <input
               id="website"
               name="website"
-              type="url"
+              type="text"
+              inputmode="url"
+              autocapitalize="none"
+              spellcheck="false"
+              pattern="(?:https?://)?(?:[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::[0-9]{1,5})?(?:[/?#][^\s]*)?"
+              title="Enter a website such as example.com or https://example.com."
               autocomplete="url"
               placeholder="https://"
               maxlength="300"
@@ -169,6 +174,23 @@ import Photo from '../components/Photo.astro';
 </Base>
 <script>
   const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const website = document.querySelector<HTMLInputElement>('#website');
+  function normalizeWebsite() {
+    if (!website) return '';
+    website.setCustomValidity('');
+    const value = website.value.trim();
+    if (!value) return '';
+    try {
+      const url = new URL(/^[a-z][a-z0-9+.-]*:/i.test(value) ? value : `https://${value}`);
+      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password ||
+          !url.hostname.includes('.')) throw new Error('Invalid website');
+      return url.href;
+    } catch {
+      website.setCustomValidity('Enter a valid HTTP or HTTPS website, such as example.com.');
+      return '';
+    }
+  }
+  website?.addEventListener('input', normalizeWebsite);
   const interest = document.querySelector<HTMLSelectElement>('#interest');
   const requested = new URLSearchParams(window.location.search).get('interest');
   if (
@@ -179,8 +201,10 @@ import Photo from '../components/Photo.astro';
     interest.value = requested;
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const normalizedWebsite = normalizeWebsite();
     if (form.getAttribute('aria-busy') === 'true' || !form.reportValidity()) return;
     const data = new FormData(form);
+    data.set('website', normalizedWebsite);
     if (data.get('fax')) return;
     const status = document.querySelector<HTMLElement>('#form-status')!;
     const submit = form.querySelector<HTMLButtonElement>(
