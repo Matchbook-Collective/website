@@ -1,0 +1,72 @@
+---
+import { getCollection, render } from 'astro:content';
+import { globSync } from 'node:fs';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+export async function getStaticPaths() {
+  if (![...globSync('src/content/insights/**/*.md')].some(
+    (file) => !file.endsWith('/editorial-placeholder.md'),
+  )) return [];
+  const articles = await getCollection(
+    'insights',
+    ({ data }) => data.approved && !data.draft,
+  );
+  if (!articles.length) return [];
+  return [
+    { params: { slug: undefined }, props: { article: null, articles } },
+    ...articles.map((article) => ({
+      params: { slug: article.id },
+      props: { article, articles },
+    })),
+  ];
+}
+interface Props {
+  article: CollectionEntry<'insights'> | null;
+  articles: CollectionEntry<'insights'>[];
+}
+const { article, articles } = Astro.props;
+const rendered = article ? await render(article) : null;
+const Content = rendered?.Content;
+---
+
+<Base
+  title={article?.data.title ?? 'The Spark'}
+  description={
+    article?.data.description ??
+    'Ideas and observations from Matchbook Collective.'
+  }
+>
+  {article && Content ? (
+    <article class="article wrap section-space">
+      <p class="eyebrow">The Spark / {article.data.pillar}</p>
+      <h1>{article.data.title}</h1>
+      <p>
+        {article.data.author} ·{' '}
+        <time datetime={article.data.publishedAt.toISOString()}>
+          {article.data.publishedAt.toLocaleDateString('en-US', {
+            dateStyle: 'long',
+            timeZone: 'UTC',
+          })}
+        </time>
+      </p>
+      <Content />
+    </article>
+  ) : (
+    <section class="page-intro wrap">
+      <p class="eyebrow">The Spark</p>
+      <h1>
+        Ideas worth
+        <br />
+        <em>a closer look.</em>
+      </h1>
+      {articles.map((item) => (
+        <article>
+          <h2>
+            <a href={`/insights/${item.id}`}>{item.data.title}</a>
+          </h2>
+          <p>{item.data.description}</p>
+        </article>
+      ))}
+    </section>
+  )}
+</Base>

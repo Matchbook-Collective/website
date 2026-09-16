@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+---
+
+<Base
+  title="Let’s Talk"
+  description="Tell Matchbook what’s keeping your business from its next stage of growth. Start with what’s stuck, what’s next, or what you’d like to change."
+>
+  <section class="contact-layout wrap">
+    <div class="contact-intro">
+      <p class="eyebrow">Let’s match.</p>
+      <h1>
+        What’s keeping
+        <br />
+        your business
+        <br />
+        <em>from what’s next?</em>
+      </h1>
+      <p>
+        You don’t need a perfect brief.
+        <br />
+        Tell us what’s stuck, what’s changing,
+        <br />
+        or what you’d like to make happen.
+      </p>
+      <Photo kind="paper" class="contact-photo" eager />
+    </div>
+    <div class="contact-form-wrap">
+      <p class="eyebrow">Start a conversation</p>
+      <h2>
+        A little context.
+        <br />
+        <em>A useful first step.</em>
+      </h2>
+      <p class="form-guide">
+        Only your name, email, and a little about the challenge are required.
+      </p>
+      <form
+        id="contact-form"
+        name="contact"
+        method="POST"
+        action="/thank-you/"
+        data-netlify="true"
+        data-netlify-honeypot="fax"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">
+              Your name <span>(required)</span>
+            </label>
+            <input
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+              maxlength="100"
+            />
+          </div>
+          <div class="field">
+            <label for="company">
+              Company <span>(optional)</span>
+            </label>
+            <input
+              id="company"
+              name="company"
+              autocomplete="organization"
+              maxlength="150"
+            />
+          </div>
+          <div class="field">
+            <label for="email">
+              Email <span>(required)</span>
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="254"
+            />
+          </div>
+          <div class="field">
+            <label for="website">
+              Website <span>(optional)</span>
+            </label>
+            <input
+              id="website"
+              name="website"
+              type="url"
+              autocomplete="url"
+              placeholder="https://"
+              maxlength="300"
+            />
+          </div>
+          <div class="field full">
+            <label for="challenge">
+              What are you trying to solve? <span>(required)</span>
+            </label>
+            <textarea
+              id="challenge"
+              name="challenge"
+              required
+              rows="4"
+              maxlength="3000"
+              placeholder="Where is the business now, and what would you like to change?"
+            ></textarea>
+          </div>
+          <div class="field">
+            <label for="timing">
+              Timing <span>(optional)</span>
+            </label>
+            <select id="timing" name="timing">
+              <option value="">Choose a timeframe</option>
+              <option>As soon as possible</option>
+              <option>In the next 1–3 months</option>
+              <option>Later this year</option>
+              <option>Just exploring</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="budget">
+              Budget <span>(optional)</span>
+            </label>
+            <input
+              id="budget"
+              name="budget"
+              maxlength="100"
+              placeholder="A range, or still figuring it out"
+            />
+          </div>
+          <div class="field full">
+            <label for="interest">
+              Interested in <span>(optional)</span>
+            </label>
+            <select id="interest" name="interest">
+              <option value="">Let’s figure it out together</option>
+              <option>The Matchbook Method</option>
+              <option>Matchbook Social</option>
+              <option>Matchbook Growth Partner</option>
+              <option>Partnerships + Client Growth</option>
+              <option>Special Projects</option>
+            </select>
+          </div>
+        </div>
+        <div class="honeypot" aria-hidden="true">
+          <label for="fax">Leave this empty</label>
+          <input id="fax" name="fax" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="action button" type="submit">
+          <span>
+            Start a conversation
+          </span>
+          <span class="arrow" aria-hidden="true">
+            ↗
+          </span>
+        </button>
+        <p
+          class="form-status"
+          id="form-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+    </div>
+  </section>
+</Base>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const interest = document.querySelector<HTMLSelectElement>('#interest');
+  const requested = new URLSearchParams(window.location.search).get('interest');
+  if (
+    interest &&
+    requested &&
+    [...interest.options].some((option) => option.value === requested)
+  )
+    interest.value = requested;
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (form.getAttribute('aria-busy') === 'true' || !form.reportValidity()) return;
+    const data = new FormData(form);
+    if (data.get('fax')) return;
+    const status = document.querySelector<HTMLElement>('#form-status')!;
+    const submit = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    )!;
+    submit.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    status.textContent = 'Sending your note…';
+    try {
+      const body = new URLSearchParams();
+      data.forEach((value, key) => body.append(key, String(value)));
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        signal: AbortSignal.timeout(20000),
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      window.location.assign(form.action);
+    } catch {
+      status.textContent =
+        'We couldn’t confirm your submission. Your entries are still here. Please check your connection and try again.';
+    } finally {
+      submit.disabled = false;
+      form.removeAttribute('aria-busy');
+    }
+  });
+</script>

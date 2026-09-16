@@ -1,0 +1,79 @@
+---
+import { getImage } from 'astro:assets';
+import logo from '../assets/matchbook-logo.png';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import '../styles/global.css';
+import '@fontsource/instrument-serif/latin-400.css';
+import '@fontsource/instrument-serif/latin-400-italic.css';
+import '@fontsource/manrope/latin-400.css';
+import '@fontsource/manrope/latin-500.css';
+import '@fontsource/manrope/latin-600.css';
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+}
+const { title, description = site.description, noindex = false } = Astro.props;
+const canonical = Astro.site && !noindex
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+const share = await getImage({ src: logo, width: 1200, format: 'png' });
+const favicon = await getImage({ src: logo, width: 64, format: 'png' });
+const shareUrl = Astro.site ? new URL(share.src, Astro.site).href : share.src;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  description,
+  ...(Astro.site ? { url: Astro.site.href, logo: shareUrl } : {}),
+  founder: [
+    { '@type': 'Person', name: 'Megan' },
+    { '@type': 'Person', name: 'Heather' },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | The Matchbook Collective Agency</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F5F0E8" />
+    <meta
+      name="robots"
+      content={noindex || !Astro.site ? 'noindex, nofollow' : 'index, follow'}
+    />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={`${title} | Matchbook Collective`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={shareUrl} />
+    <meta
+      property="og:image:alt"
+      content="Matchbook Collective — MB monogram with a lit match"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}
+    ></script>
+  </head>
+  <body id="top" class:list={{ 'home-page': Astro.url.pathname === '/' }}>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

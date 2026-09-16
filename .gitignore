@@ -68,7 +68,6 @@ web_modules/
 # dotenv environment variable files
 .env
 .env.*
-!.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -141,3 +140,20 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Local review tooling and generated files
+.DS_Store
+.astro/
+.npm-cache/
+.qa/
+.tools/
+
+# Netlify local state
+.netlify/
+
+
+# Local business reviews and unused source material
+docs/CONTENT-REVIEW.md
+docs/LAUNCH-READINESS.md
+src/assets/matchbook-logo.jpg
+src/content/insights/editorial-placeholder.md

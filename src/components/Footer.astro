@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/matchbook-logo.png';
+import { navigation } from '../data/site';
+---
+
+<footer class="site-footer wrap">
+  <div class="footer-top">
+    <a href="/" aria-label="Matchbook Collective — Home">
+      <Image
+        src={logo}
+        alt="Matchbook Collective"
+        width={540}
+        sizes="(max-width: 600px) 190px, 210px"
+        widths={[210, 420, 540]}
+        format="webp"
+        loading="lazy"
+      />
+    </a>
+    <p>
+      Find the spark.
+      <br />
+      Build the strategy.
+      <br />
+      <em>Turn it into momentum.</em>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <small>© {new Date().getFullYear()} The Matchbook Collective Agency</small>
+    <nav aria-label="Footer navigation">
+      {navigation
+        .filter((i) => i.href !== '/')
+        .map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      <a href="/contact">Let’s talk</a>
+    </nav>
+    <a href="#top" class="back-top">
+      Back to top ↑
+    </a>
+  </div>
+</footer>

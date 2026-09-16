@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import agency from '../assets/matchbook-agency.png';
+import paper from '../assets/matchbook-paper.png';
+import open from '../assets/matchbook-open.png';
+import match from '../assets/lit-match.png';
+interface Props {
+  kind?: 'agency' | 'paper' | 'open' | 'match';
+  alt?: string;
+  class?: string;
+  eager?: boolean;
+  sizes?: string;
+}
+const {
+  kind = 'agency',
+  alt,
+  class: className = '',
+  eager = false,
+  sizes = '(max-width: 700px) 100vw, 50vw',
+} = Astro.props;
+const photos = { agency, paper, open, match };
+const descriptions = {
+  agency:
+    'The Matchbook Collective Agency matchbook beside a lit match on warm ivory paper.',
+  paper:
+    'A Matchbook Collective matchbook on a warm textured surface beside a stone dish and lit match.',
+  open: 'An open Matchbook Collective matchbook and a single burning match.',
+  match: 'A single wooden match burning against black.',
+};
+---
+
+<Image
+  src={photos[kind]}
+  alt={alt ?? descriptions[kind]}
+  class={className}
+  widths={[400, 700, 1100, 1400]}
+  sizes={sizes}
+  format="webp"
+  quality={85}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : 'auto'}
+/>

@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Link from '../components/Link.astro';
+import MethodMarkers from '../components/MethodMarkers.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { transformation } from '../data/method';
+---
+
+<Base
+  title="The Matchbook Method"
+  description="Twelve connected growth areas. A clearer picture of your business. Explore the Matchbook Method and the path from scattered activity to a prioritized growth plan."
+>
+  <section class="method-hero dark-section">
+    <div class="wrap">
+      <div class="method-hero-copy">
+        <p class="eyebrow">The Matchbook Method</p>
+        <h1>
+          12 moves.
+          <br />
+          One growth
+          <br />
+          <em>engine.</em>
+        </h1>
+        <p>
+          See the whole business.
+          <br />
+          Find what matters.
+          <br />
+          Know where to go next.
+        </p>
+        <Link
+          href="/contact?interest=The%20Matchbook%20Method"
+          variant="button"
+          light
+        >
+          Put the Method to work
+        </Link>
+      </div>
+      <Photo
+        kind="match"
+        class="single-match"
+        eager
+        sizes="(max-width: 700px) 40vw, 45vw"
+      />
+    </div>
+  </section>
+  <section class="method-intro wrap section-space">
+    <p class="eyebrow">The pieces are connected.</p>
+    <h2>
+      A marketing problem
+      <br />
+      can start <em>somewhere else.</em>
+    </h2>
+    <div>
+      <p>
+        Low inquiries could point to an unclear offer. A strong campaign can
+        lose people on a confusing website. More new customers won’t resolve an
+        experience that gives them little reason to return.
+      </p>
+      <p>
+        The Matchbook Method examines the interconnected areas that influence
+        growth. It brings them into one conversation so you can see where to
+        focus.
+      </p>
+    </div>
+  </section>
+  <section class="method-system section-space">
+    <div class="wrap">
+      <div class="section-heading">
+        <p class="eyebrow">What we look at</p>
+        <h2>
+          Twelve areas.
+          <br />
+          <em>The whole picture.</em>
+        </h2>
+        <p>
+          Each matters on its own.
+          <br />
+          The opportunity is in how they work together.
+        </p>
+      </div>
+      <MethodMarkers expanded />
+      <p class="system-note">
+        A view of the areas we explore—not a checklist to complete in order.
+      </p>
+    </div>
+  </section>
+  <section class="uncover wrap section-space">
+    <div>
+      <p class="eyebrow">What a closer look can reveal</p>
+      <h2>
+        Sometimes the next move
+        <br />
+        <em>is hiding in plain sight.</em>
+      </h2>
+      <p>
+        Every business is different. These are examples of opportunities the
+        Method is designed to explore, not findings or promised results.
+      </p>
+    </div>
+    <div class="uncover-list">
+      <article>
+        <span class="micro">The offer</span>
+        <h3>A great service that’s hard to understand.</h3>
+        <p>
+          A clearer way to describe and package it may help the right customer
+          see its value.
+        </p>
+      </article>
+      <article>
+        <span class="micro">The handoff</span>
+        <h3>Interest that never becomes a conversation.</h3>
+        <p>
+          The opportunity may be in the step between discovery, inquiry, and
+          follow-up.
+        </p>
+      </article>
+      <article>
+        <span class="micro">The relationship</span>
+        <h3>A customer who could have a reason to return.</h3>
+        <p>
+          Customer experience, retention, and partnerships may deserve attention
+          alongside acquisition.
+        </p>
+      </article>
+    </div>
+  </section>
+  <section class="blueprint-section dark-section section-space">
+    <div class="wrap">
+      <div class="blueprint-heading">
+        <p class="eyebrow">What you walk away with</p>
+        <h2>
+          Your Matchbook
+          <br />
+          <em>Growth Blueprint.</em>
+        </h2>
+        <p>
+          A clear view of the business today, a prioritized set of
+          recommendations, and a practical growth roadmap. Something you can use
+          to make the next decision.
+        </p>
+      </div>
+      <ol class="transformation">
+        {transformation.map((step, i) => (
+          <li>
+            <span class="micro">0{i + 1}</span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="blueprint-output">
+        <p>
+          <strong>Clarity.</strong>
+          <br />
+          Understand the opportunities and gaps.
+        </p>
+        <p>
+          <strong>Priorities.</strong>
+          <br />
+          Know where your attention belongs.
+        </p>
+        <p>
+          <strong>A roadmap.</strong>
+          <br />
+          Connect the next steps to the bigger picture.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="method-next wrap section-space">
+    <p class="eyebrow">What happens next</p>
+    <h2>
+      A plan is a beginning.
+      <br />
+      <em>Let’s put it to work.</em>
+    </h2>
+    <p>
+      Take the roadmap forward with your team, or talk with us about the
+      creative, social, and ongoing growth support that would help you implement
+      it.
+    </p>
+    <Link href="/services">Explore support beyond the strategy</Link>
+  </section>
+  <FinalCTA />
+</Base>

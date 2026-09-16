@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { services } from '../data/services';
+---
+
+<Base
+  title="Services"
+  description="Find the right support for your business: strategy and clarity, fractional growth leadership, creative and content, partnerships, and special projects."
+>
+  <section class="page-intro wrap services-intro">
+    <p class="eyebrow">Good work starts with the right problem.</p>
+    <h1>
+      Where you are.
+      <br />
+      <em>Where you could go.</em>
+    </h1>
+    <div class="intro-bottom">
+      <span class="micro">Five ways to move forward</span>
+      <p>
+        Whether you need a clearer plan, stronger execution, or someone to help
+        lead the next chapter, let’s find the right fit.
+      </p>
+    </div>
+  </section>
+  <nav class="service-jump wrap" aria-label="Service families">
+    {services.map((service) => (
+      <a href={`#${service.id}`}>
+        <span>{service.number}</span>
+        {service.name}
+        <span aria-hidden="true">↓</span>
+      </a>
+    ))}
+  </nav>
+  <div class="service-details">
+    {services.map((service) => (
+      <section id={service.id} class="service-detail wrap">
+        <div class="service-label">
+          <span class="service-big-number" aria-hidden="true">
+            {service.number}
+          </span>
+          <p class="eyebrow">{service.name}</p>
+        </div>
+        <div class="service-body">
+          <h2>{service.situation}</h2>
+          <p class="service-who">{service.who}</p>
+          <div class="service-facts">
+            <div>
+              <h3>The problem we help solve</h3>
+              <p>{service.problem}</p>
+              <h3>What you walk away with</h3>
+              <p>{service.outcome}</p>
+            </div>
+            <div>
+              <h3>What we might do</h3>
+              <ul>
+                {service.work.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+              <h3>How we work together</h3>
+              <p>{service.format}</p>
+            </div>
+          </div>
+          {service.offer && (
+            <div class="engagement-label">
+              <span class="micro">A way to engage</span>
+              <strong>{service.offer}</strong>
+            </div>
+          )}
+          <Link href={service.href}>
+            {service.id === 'strategy'
+              ? 'Explore the Matchbook Method'
+              : 'Talk about what you need'}
+          </Link>
+        </div>
+      </section>
+    ))}
+  </div>
+  <section class="fit-note wrap">
+    <p class="eyebrow">Not sure where you fit?</p>
+    <h2>
+      You can start
+      <br />
+      <em>with what’s stuck.</em>
+    </h2>
+    <p>
+      You don’t need to assemble your own package. Tell us where the business is
+      and what you want to change. We’ll start there.
+    </p>
+    <Link href="/contact" variant="button">
+      Start a conversation
+    </Link>
+  </section>
+  <FinalCTA />
+</Base>

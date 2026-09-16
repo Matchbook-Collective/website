@@ -1,0 +1,37 @@
+---
+import { caseStudies, workCategories } from '../data/work';
+interface Props {
+  foundersOnly?: boolean;
+}
+const { foundersOnly = false } = Astro.props;
+const approved = caseStudies.filter(
+  (study) => study.approved && (!foundersOnly || study.category === 'founder'),
+);
+---
+
+{approved.length > 0 && (
+  <section class="approved-work wrap section-space">
+    <p class="eyebrow">
+      {foundersOnly ? 'Selected founder experience' : 'Inside the collection'}
+    </p>
+    <div class="service-index">
+      {approved.map((study) => (
+        <a href={`/work/${study.slug}`}>
+          <span class="micro">↗</span>
+          <div>
+            <p class="eyebrow">
+              {
+                workCategories.find(
+                  (category) => category.id === study.category,
+                )?.title
+              }
+            </p>
+            <h3>{study.title}</h3>
+            <p>{study.relationship}</p>
+          </div>
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

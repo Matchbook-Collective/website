@@ -1,0 +1,21 @@
+---
+import { methodAreas } from '../data/method';
+interface Props {
+  expanded?: boolean;
+}
+const { expanded = false } = Astro.props;
+---
+
+<ol
+  class:list={['method-markers', { expanded }]}
+  aria-label="The twelve public growth areas"
+>
+  {methodAreas.map((area, i) => (
+    <li>
+      <span class="match-line" aria-hidden="true"></span>
+      <span class="marker-number">{String(i + 1).padStart(2, '0')}</span>
+      <h3>{area.name}</h3>
+      {expanded && <p>{area.description}</p>}
+    </li>
+  ))}
+</ol>

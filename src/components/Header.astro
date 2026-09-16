@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/matchbook-logo.png';
+import { navigation } from '../data/site';
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a
+      class="brand"
+      href="/"
+      aria-label="The Matchbook Collective Agency — Home"
+    >
+      <Image
+        src={logo}
+        alt="Matchbook Collective"
+        width={640}
+        sizes="(max-width: 850px) 230px, 300px"
+        widths={[230, 300, 460, 640]}
+        format="webp"
+        loading="eager"
+      />
+    </a>
+    <p class="brand-tagline">A Creative Marketing Agency Built to Spark Growth</p>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {navigation.map((item) => (
+        <a
+          href={item.href}
+          aria-current={current === item.href ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <a
+      class="nav-cta action button"
+      href="/contact"
+      aria-current={current === '/contact' ? 'page' : undefined}
+    >
+      <span>Let’s Match</span><span class="arrow" aria-hidden="true">↗</span>
+    </a>
+    <details class="mobile-menu">
+      <summary>
+        Menu <span aria-hidden="true">＋</span>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        {navigation.map((item) => (
+          <a
+            href={item.href}
+            aria-current={current === item.href ? 'page' : undefined}
+          >
+            {item.label}
+            <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        <a
+          class="mobile-match action button"
+          href="/contact"
+          aria-current={current === '/contact' ? 'page' : undefined}
+        >
+          <span>Let’s Match</span><span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (
+      menu?.open &&
+      event.target instanceof Node &&
+      !menu.contains(event.target)
+    )
+      menu.open = false;
+  });
+</script>

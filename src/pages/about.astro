@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCollection from '../components/WorkCollection.astro';
+import Photo from '../components/Photo.astro';
+import Link from '../components/Link.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { founders, originStory } from '../data/founders';
+import { promises } from '../data/site';
+---
+
+<Base
+  title="About Megan + Heather"
+  description="The belief behind Matchbook: a more useful kind of agency partnership, connecting business strategy, creative thinking, and practical action."
+>
+  <section class="page-intro wrap">
+    <p class="eyebrow">The people behind the spark</p>
+    <h1 class="about-headline">
+      <span>Good thinking. Good chemistry.</span>
+      <em>Better together.</em>
+    </h1>
+    <div class="intro-bottom">
+      <span class="micro">Megan + Heather / Co-founders</span>
+      <p>
+        Two different perspectives. One shared belief: businesses deserve a
+        clearer, more practical way to grow.
+      </p>
+    </div>
+  </section>
+  <section class="about-belief">
+    <Photo kind="paper" class="about-photo" eager />
+    <div class="about-belief-copy">
+      <p class="eyebrow">Why Matchbook exists</p>
+      <h2>
+        There has to be
+        <br />
+        <em>a more useful way.</em>
+      </h2>
+      <p>
+        More posts. Another campaign. A new brand direction. It’s easy for
+        marketing to become a list of things to do.
+      </p>
+      <p>
+        We believe the better starting point is the business itself: what you’re
+        building, who you’re reaching, and what’s getting in the way.
+      </p>
+      <p>
+        Matchbook brings strategic and creative thinking together, then connects
+        that thinking to work you can actually use.
+      </p>
+    </div>
+  </section>
+  {originStory && (
+    <section class="wrap section-space">
+      <p class="eyebrow">Our story</p>
+      <p>{originStory}</p>
+    </section>
+  )}
+  <section class="founders-section wrap section-space">
+    <div class="section-heading">
+      <p class="eyebrow">Meet the co-founders</p>
+      <h2>
+        <em>Megan + Heather.</em>
+      </h2>
+      <p>Different perspectives belong at the same table.</p>
+    </div>
+    <div class="founder-profiles">
+      {founders.map((founder, i) => (
+        <article>
+          <span class="micro">
+            0{i + 1} / {founder.role}
+          </span>
+          <h3>{founder.name}</h3>
+          {founder.portrait && (
+            <img
+              src={founder.portrait}
+              alt={founder.name}
+              width="600"
+              height="750"
+              loading="lazy"
+            />
+          )}
+          {founder.bio ? (
+            <p>{founder.bio}</p>
+          ) : (
+            <p class="profile-coming">A closer introduction is on its way.</p>
+          )}
+          {founder.careerHighlights.length > 0 && (
+            <ul>
+              {founder.careerHighlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          )}
+          {founder.personalDetail && <p>{founder.personalDetail}</p>}
+          <a href="/contact">
+            Start a conversation <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="together dark-section section-space">
+    <div class="wrap">
+      <p class="eyebrow">Better together</p>
+      <h2>
+        The business.
+        <br />
+        The brand.
+        <br />
+        <em>The bigger picture.</em>
+      </h2>
+      <div class="together-copy">
+        <p>
+          Strong ideas need a business reason. A business strategy needs a clear
+          way to show up in the world.
+        </p>
+        <p>
+          We bring those conversations together—connecting the offer, the
+          message, the customer experience, and the next practical move.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="about-promise wrap section-space">
+    <div>
+      <p class="eyebrow">What clients get with us</p>
+      <h2>
+        Senior thinking.
+        <br />
+        <em>Human approach.</em>
+      </h2>
+    </div>
+    <div class="lined-list">
+      {promises.map((promise, i) => (
+        <p>
+          <span class="micro">0{i + 1}</span>
+          {promise}
+        </p>
+      ))}
+      <p class="plain-note">
+        No bloated agency layers. No strategy deck designed to disappear into a
+        folder.
+      </p>
+      <Link href="/method">See how we think</Link>
+    </div>
+  </section>
+  <WorkCollection foundersOnly />
+  <FinalCTA />
+</Base>

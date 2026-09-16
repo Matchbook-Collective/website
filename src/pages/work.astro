@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCollection from '../components/WorkCollection.astro';
+import Photo from '../components/Photo.astro';
+import Link from '../components/Link.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { workCategories } from '../data/work';
+---
+
+<Base
+  title="Work + Thinking"
+  description="A growing collection of Matchbook projects, clearly attributed founder experience, and independent strategic concepts."
+>
+  <section class="page-intro wrap">
+    <p class="eyebrow">The work & the thinking</p>
+    <h1>
+      The work matters.
+      <br />
+      <em>So does the why.</em>
+    </h1>
+    <div class="intro-bottom">
+      <span class="micro">A collection in the making</span>
+      <p>
+        Good work starts with what someone noticed, the questions they asked,
+        and the decisions that followed.
+      </p>
+    </div>
+  </section>
+  <section class="work-library wrap">
+    <Photo kind="open" class="library-photo" eager />
+    <div class="library-copy">
+      <p class="eyebrow">Building the library</p>
+      <h2>
+        There’s more
+        <br />
+        <em>to the story.</em>
+      </h2>
+      <p>
+        We’re putting together a thoughtful collection of work and experience.
+        Each story will make clear who did the work, what shaped the approach,
+        and what happened next.
+      </p>
+      <p>
+        While that collection takes shape, our Method is the best place to
+        explore how we think.
+      </p>
+      <Link href="/method">Explore our approach</Link>
+    </div>
+  </section>
+  <section class="proof-categories wrap section-space">
+    <p class="eyebrow">Three distinct kinds of proof</p>
+    {workCategories.map((category, i) => (
+      <article>
+        <span class="micro">0{i + 1}</span>
+        <h2>{category.title}</h2>
+        <p>{category.text}</p>
+      </article>
+    ))}
+  </section>
+  <section class="work-standard dark-section section-space">
+    <div class="wrap">
+      <p class="eyebrow">The story behind the work</p>
+      <h2>
+        From the first observation
+        <br />
+        <em>to the next step.</em>
+      </h2>
+      <p>
+        Our case studies will connect the challenge, what we noticed, our
+        approach, what we built or recommended, and the outcome. Clear context
+        matters as much as the finished work.
+      </p>
+      <Link href="/contact" light>
+        Bring us your next challenge
+      </Link>
+    </div>
+  </section>
+  <WorkCollection />
+  <FinalCTA />
+</Base>

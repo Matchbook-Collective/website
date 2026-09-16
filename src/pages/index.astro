@@ -1,0 +1,222 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Link from '../components/Link.astro';
+import MethodMarkers from '../components/MethodMarkers.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { beliefs, needs, promises } from '../data/site';
+import { services } from '../data/services';
+---
+
+<Base title="A clearer way to grow">
+  <section class="home-hero wrap">
+    <div class="hero-topline">
+      <p class="hero-prelude">You don’t need more marketing.</p>
+      <span class="micro">Strategy meets possibility.</span>
+    </div>
+    <div class="hero-composition">
+      <div class="hero-copy">
+        <h1>
+          You need a plan
+          <br class="wide-only" /> that moves the
+          <br class="wide-only" /> business <em>forward.</em>
+        </h1>
+        <p class="hero-description">
+          Matchbook Collective helps brands find the spark, build the strategy,
+          and turn it into momentum.
+        </p>
+        <div class="hero-actions">
+          <Link href="/contact" variant="button">
+            Start a conversation
+          </Link>
+          <Link href="/method">Explore the Matchbook Method</Link>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <Photo
+          kind="agency"
+          eager
+          class="hero-photo"
+          sizes="(max-width: 700px) 100vw, 43vw"
+        />
+        <figcaption>
+          <span>Small spark. Bigger picture.</span>
+          <span aria-hidden="true">01 / MB</span>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="hero-baseline">
+      <span>Strategy · Brand · Creative · Growth</span>
+      <a href="#point-of-view">
+        A different way to look at it <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </section>
+  <section id="point-of-view" class="manifesto wrap section-space">
+    <div class="section-intro">
+      <p class="eyebrow">01 / Our point of view</p>
+      <h2>
+        Before we add
+        <br />
+        anything,
+        <br />
+        <em>we look closer.</em>
+      </h2>
+      <p>
+        Growth isn’t one-size-fits-all. And more marketing activity isn’t
+        automatically the answer.
+      </p>
+    </div>
+    <div class="belief-list">
+      {beliefs.map((belief, i) => (
+        <article>
+          <span class="micro">0{i + 1}</span>
+          <div>
+            <h3>{belief.title}</h3>
+            <p>{belief.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="needs-section section-space">
+    <div class="wrap">
+      <div class="section-heading">
+        <p class="eyebrow">02 / Start where you are</p>
+        <h2>
+          What do you need
+          <br />
+          <em>right now?</em>
+        </h2>
+        <p>
+          You don’t need to know the name of the service.
+          <br />
+          Just what you’d like to change.
+        </p>
+      </div>
+      <div class="needs-list">
+        {needs.map((need, i) => (
+          <a href={need.href}>
+            <span class="micro">0{i + 1}</span>
+            <h3>
+              I need <em>{need.word}.</em>
+            </h3>
+            <p>{need.detail}</p>
+            <span class="need-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="method-preview dark-section section-space">
+    <div class="wrap">
+      <div class="method-preview-head">
+        <div>
+          <p class="eyebrow">03 / The Matchbook Method</p>
+          <h2>
+            12 moves.
+            <br />
+            <em>One growth engine.</em>
+          </h2>
+        </div>
+        <div>
+          <p>
+            Growth comes from how the pieces connect. Our signature Method looks
+            across twelve areas of your business to find the gaps, the
+            opportunities, and the right next move.
+          </p>
+          <Link href="/method" light>
+            Explore the Method
+          </Link>
+        </div>
+      </div>
+      <MethodMarkers />
+      <div class="method-caption">
+        <span>From scattered activity</span>
+        <span class="connecting-rule" aria-hidden="true"></span>
+        <span>To a prioritized growth plan</span>
+      </div>
+    </div>
+  </section>
+  <section class="services-preview wrap section-space">
+    <div class="section-intro">
+      <p class="eyebrow">04 / Ways to move forward</p>
+      <h2>
+        The right thinking.
+        <br />
+        <em>The right support.</em>
+      </h2>
+      <p>
+        From a focused strategic engagement to an ongoing growth partnership, we
+        meet you where the business is.
+      </p>
+      <Link href="/services">Find your way to work with us</Link>
+    </div>
+    <div class="service-index">
+      {services.map((service) => (
+        <a href={`/services#${service.id}`}>
+          <span class="micro">{service.number}</span>
+          <h3>{service.name}</h3>
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="founder-preview">
+    <Photo kind="paper" class="founder-photo" />
+    <div class="founder-copy">
+      <p class="eyebrow">05 / Meet the collective</p>
+      <h2>
+        Two perspectives.
+        <br />
+        <em>One shared belief.</em>
+      </h2>
+      <p>
+        Good marketing shouldn’t feel like throwing ideas at a wall and hoping
+        something sticks.
+      </p>
+      <p>
+        Megan and Heather created Matchbook around a more useful kind of
+        partnership: one that brings the business, the brand, and the work into
+        the same conversation.
+      </p>
+      <p class="founder-names">
+        Megan <span>+</span> Heather
+      </p>
+      <Link href="/about">Meet Megan + Heather</Link>
+    </div>
+  </section>
+  <section class="proof-preview wrap section-space">
+    <p class="eyebrow">06 / The work & the thinking</p>
+    <h2>
+      The work matters.
+      <br />
+      <em>So does the thinking behind it.</em>
+    </h2>
+    <div class="proof-bottom">
+      <p>
+        We’re building our collection of Matchbook projects, selected founder
+        experience, and clearly labeled concept work. In the meantime, explore
+        the thinking that shapes our approach.
+      </p>
+      <Link href="/work">Inside our work</Link>
+    </div>
+  </section>
+  <section class="promise-section wrap">
+    <p class="eyebrow">07 / What you get with us</p>
+    <div>
+      {promises.map((promise) => (
+        <p>{promise}</p>
+      ))}
+    </div>
+    <p class="promise-note">
+      A direct relationship.
+      <br />A practical next step.
+      <br />
+      People in your corner.
+    </p>
+  </section>
+  <FinalCTA />
+</Base>

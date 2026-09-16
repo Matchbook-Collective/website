@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build && npm run verify"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.21.0"
+  ASTRO_TELEMETRY_DISABLED = "1"

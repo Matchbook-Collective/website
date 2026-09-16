@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import { caseStudies, workCategories } from '../../data/work';
+export function getStaticPaths() {
+  return caseStudies
+    .filter((study) => study.approved)
+    .map((study) => ({ params: { slug: study.slug }, props: { study } }));
+}
+const { study } = Astro.props;
+const category = workCategories.find((item) => item.id === study.category);
+---
+
+<Base title={study.title} description={study.challenge}>
+  <article class="article wrap section-space">
+    <p class="eyebrow">{category?.title}</p>
+    <h1>{study.title}</h1>
+    <p>{study.relationship}</p>
+    <h2>The challenge</h2>
+    <p>{study.challenge}</p>
+    <h2>What we noticed</h2>
+    <p>{study.observation}</p>
+    <h2>
+      {study.category === 'founder'
+        ? 'The founder’s approach'
+        : 'The Matchbook approach'}
+    </h2>
+    <p>{study.approach}</p>
+    <h2>
+      What {study.category === 'founder' ? 'the founder' : 'we'} built or
+      recommended
+    </h2>
+    <p>{study.deliverables}</p>
+    <h2>
+      {study.outcomeType === 'proposed' ? 'Proposed impact' : 'The outcome'}
+    </h2>
+    <p>{study.outcome}</p>
+    {study.testimonial?.approved && (
+      <blockquote>
+        <p>{study.testimonial.quote}</p>
+        <cite>{study.testimonial.attribution}</cite>
+      </blockquote>
+    )}
+  </article>
+  <FinalCTA />
+</Base>

@@ -1,0 +1,22 @@
+---
+import Photo from './Photo.astro';
+import Link from './Link.astro';
+---
+
+<section class="final-cta" aria-labelledby="final-heading">
+  <div class="cta-copy">
+    <p class="eyebrow">Good things start with a conversation.</p>
+    <h2 id="final-heading">
+      Ready to find your next
+      <br />
+      <em>growth opportunity?</em>
+    </h2>
+    <Link href="/contact" variant="button" light>
+      Let’s match.
+    </Link>
+  </div>
+  <Photo kind="open" class="cta-photo" />
+  <span class="cta-index" aria-hidden="true">
+    A little spark. A better next step.
+  </span>
+</section>

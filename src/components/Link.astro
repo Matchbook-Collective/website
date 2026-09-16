@@ -1,0 +1,17 @@
+---
+interface Props {
+  href: string;
+  variant?: 'button' | 'text';
+  light?: boolean;
+}
+const { href, variant = 'text', light = false } = Astro.props;
+---
+
+<a href={href} class:list={['action', variant, { light }]}>
+  <span>
+    <slot />
+  </span>
+  <span class="arrow" aria-hidden="true">
+    ↗
+  </span>
+</a>
