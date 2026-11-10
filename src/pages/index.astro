@@ -109,9 +109,65 @@ import { services } from '../data/services';
       </div>
     </div>
   </section>
+  <section class="packages-section wrap section-space" aria-labelledby="packages-heading">
+    <div class="packages-heading">
+      <p class="eyebrow">03 / Our packages</p>
+      <h2 id="packages-heading">A focused start.<br /><em>A clear next step.</em></h2>
+    </div>
+    <div class="packages-grid">
+      <article class="package-card">
+        <p class="eyebrow package-price">$1,000 / Megan</p>
+        <h3>Growth Roadmap</h3>
+        <p class="package-summary">Get a customized 90-day plan for one business goal and know what to do first.</p>
+        <h4>What is included</h4>
+        <ul>
+          <li>Short intake and a focused review of the client’s offer and current marketing.</li>
+          <li>60-minute strategy call to choose one goal, one priority audience, and up to two channels.</li>
+          <li>90-day roadmap with a first-week checklist, milestones at 30, 60, and 90 days, and two or three metrics to track.</li>
+          <li>One practical tool matched to the goal, such as a referral checklist, prospect tracker, or weekly marketing schedule.</li>
+        </ul>
+      </article>
+      <article class="package-card">
+        <p class="eyebrow package-price">$1,000 / Heather</p>
+        <h3>Brand Essentials</h3>
+        <p class="package-summary">Get a cohesive visual identity you can start using across your business.</p>
+        <h4>What is included</h4>
+        <ul>
+          <li>Short brand questionnaire and visual direction.</li>
+          <li>One logo concept developed into a primary logo and a secondary mark.</li>
+          <li>Facebook Page and LinkedIn cover banners.</li>
+          <li>Color palette with hex codes and primary and supporting font selections.</li>
+          <li>One consolidated revision round.</li>
+        </ul>
+      </article>
+      <article class="package-card package-launch">
+        <p class="eyebrow package-price">$2,500 / Megan and Heather</p>
+        <h3>Brand and Growth Launch Kit</h3>
+        <p class="package-summary">Get a visual identity, a 90-day growth plan, and outreach materials you can use to start conversations.</p>
+        <div class="package-launch-details">
+          <div>
+            <h4>What is included</h4>
+            <ul>
+              <li>Shared kickoff to align the growth plan, brand, and outreach around the same offer.</li>
+              <li>Megan’s full Growth Roadmap, including the strategy call, 90-day plan, and one practical tool.</li>
+              <li>Heather’s full Brand Essentials package, including the logo, secondary mark, colors, fonts, Facebook and LinkedIn banners, and usage guide.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Branded outreach kit</h4>
+            <ul>
+              <li>One shareable branded one-pager explaining your offers, who it’s for, and how to take the next step.</li>
+              <li>One introductory email template and 5 social media templates for promotions.</li>
+              <li>A two-week outreach schedule showing when to send each message and follow up.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
   <section class="services-preview wrap section-space">
     <div class="section-intro">
-      <p class="eyebrow">03 / Ways to move forward</p>
+      <p class="eyebrow">04 / Ways to move forward</p>
       <h2>
         The right thinking.
         <br />
@@ -136,7 +192,7 @@ import { services } from '../data/services';
   <section class="founder-preview">
     <Photo kind="paper" class="founder-photo" />
     <div class="founder-copy">
-      <p class="eyebrow">04 / Meet the collective</p>
+      <p class="eyebrow">05 / Meet the collective</p>
       <h2>
         Two perspectives.
         <br />
@@ -158,7 +214,7 @@ import { services } from '../data/services';
     </div>
   </section>
   <section class="proof-preview wrap section-space">
-    <p class="eyebrow">05 / The work & the thinking</p>
+    <p class="eyebrow">06 / The work & the thinking</p>
     <h2>
       The work matters.
       <br />
@@ -174,7 +230,7 @@ import { services } from '../data/services';
     </div>
   </section>
   <section class="promise-section wrap">
-    <p class="eyebrow">06 / What you get with us</p>
+    <p class="eyebrow">07 / What you get with us</p>
     <div>
       {promises.map((promise) => (
         <p>{promise}</p>
@@ -189,3 +245,27 @@ import { services } from '../data/services';
   </section>
   <FinalCTA />
 </Base>
+
+<style>
+  .packages-section { border-bottom: 1px solid var(--rule); }
+  .packages-heading { margin-bottom: 40px; }
+  .packages-heading .eyebrow { margin-bottom: 22px; }
+  .packages-heading em { color: var(--italic-accent); }
+  .packages-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .package-card { padding: clamp(24px, 3.2vw, 48px); border: 1px solid var(--rule); background: var(--cream); }
+  .package-price { margin-bottom: 22px; color: var(--bronze); }
+  .package-card h3 { font-size: clamp(34px, 3.2vw, 46px); }
+  .package-summary { margin-top: 20px; }
+  .package-card h4 { margin: 28px 0 14px; font: 600 12px/1.5 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+  .package-card ul { margin: 0; padding-left: 20px; }
+  .package-card li { padding-left: 4px; }
+  .package-card li + li { margin-top: 12px; }
+  .package-card li::marker { color: var(--bronze); }
+  .package-launch { grid-column: 1 / -1; background: var(--ink); color: var(--paper); }
+  .package-launch .package-price, .package-launch li::marker { color: var(--sand); }
+  .package-launch-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+  @media (max-width: 850px) {
+    .packages-grid, .package-launch-details { grid-template-columns: 1fr; }
+    .package-launch-details { gap: 0; }
+  }
+</style>
