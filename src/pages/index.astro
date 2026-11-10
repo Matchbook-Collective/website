@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Link from '../components/Link.astro';
-import MethodMarkers from '../components/MethodMarkers.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import { beliefs, needs, promises } from '../data/site';
 import { services } from '../data/services';
@@ -110,39 +109,9 @@ import { services } from '../data/services';
       </div>
     </div>
   </section>
-  <section class="method-preview dark-section section-space">
-    <div class="wrap">
-      <div class="method-preview-head">
-        <div>
-          <p class="eyebrow">03 / The Matchbook Method</p>
-          <h2>
-            12 moves.
-            <br />
-            <em>One growth engine.</em>
-          </h2>
-        </div>
-        <div>
-          <p>
-            Growth comes from how the pieces connect. Our signature Method looks
-            across twelve areas of your business to find the gaps, the
-            opportunities, and the right next move.
-          </p>
-          <Link href="/method" light>
-            Explore the Method
-          </Link>
-        </div>
-      </div>
-      <MethodMarkers />
-      <div class="method-caption">
-        <span>From scattered activity</span>
-        <span class="connecting-rule" aria-hidden="true"></span>
-        <span>To a prioritized growth plan</span>
-      </div>
-    </div>
-  </section>
   <section class="services-preview wrap section-space">
     <div class="section-intro">
-      <p class="eyebrow">04 / Ways to move forward</p>
+      <p class="eyebrow">03 / Ways to move forward</p>
       <h2>
         The right thinking.
         <br />
@@ -167,7 +136,7 @@ import { services } from '../data/services';
   <section class="founder-preview">
     <Photo kind="paper" class="founder-photo" />
     <div class="founder-copy">
-      <p class="eyebrow">05 / Meet the collective</p>
+      <p class="eyebrow">04 / Meet the collective</p>
       <h2>
         Two perspectives.
         <br />
@@ -189,7 +158,7 @@ import { services } from '../data/services';
     </div>
   </section>
   <section class="proof-preview wrap section-space">
-    <p class="eyebrow">06 / The work & the thinking</p>
+    <p class="eyebrow">05 / The work & the thinking</p>
     <h2>
       The work matters.
       <br />
@@ -205,7 +174,7 @@ import { services } from '../data/services';
     </div>
   </section>
   <section class="promise-section wrap">
-    <p class="eyebrow">07 / What you get with us</p>
+    <p class="eyebrow">06 / What you get with us</p>
     <div>
       {promises.map((promise) => (
         <p>{promise}</p>
