@@ -22,11 +22,17 @@ const forbidden = [
   /Growth audit scorecard/i,
   /TODO/,
   /Lorem Ipsum/i,
-  /\$[\d,]+/,
 ];
 let links = 0;
 for (const path of pages) {
   const html = await readFile(path, 'utf8');
+  // The homepage packages have approved public prices; other pages do not.
+  const prices = html.match(/\$[\d,]+/g) || [];
+  assert.deepEqual(
+    prices,
+    path === resolve(root, 'index.html') ? ['$1,000', '$1,000', '$2,500'] : [],
+    `${path}: only approved public package prices`,
+  );
   assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1, `${path}: one h1`);
   assert.match(html, /name="description"/);
   assert.match(html, /property="og:image"/);
@@ -78,6 +84,13 @@ if (canonicalOrigin) {
   assert.ok(!sitemap.includes('/404'));
   for (const path of pages) {
     const html = await readFile(path, 'utf8');
+  // The homepage packages have approved public prices; other pages do not.
+  const prices = html.match(/\$[\d,]+/g) || [];
+  assert.deepEqual(
+    prices,
+    path === resolve(root, 'index.html') ? ['$1,000', '$1,000', '$2,500'] : [],
+    `${path}: only approved public package prices`,
+  );
     if ((path.endsWith('/404.html') || path.endsWith('/thank-you/index.html'))) {
       assert.match(html, /content="noindex, nofollow"/);
       assert.ok(!html.includes('rel="canonical"'));
