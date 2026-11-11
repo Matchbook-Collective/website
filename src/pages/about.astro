@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import meganPortrait from '../assets/megan-portrait.jpg';
+import heatherPortrait from '../assets/heather-portrait.jpg';
 import WorkCollection from '../components/WorkCollection.astro';
 import Photo from '../components/Photo.astro';
 import Link from '../components/Link.astro';
@@ -82,11 +83,11 @@ const founders = founderData.map((founder) =>
           <span class="micro">
             0{i + 1} / {founder.role}
           </span>
-          {founder.name === 'Megan' && (
+          {(founder.name === 'Megan' || founder.name === 'Heather') && (
             <Image
-              src={meganPortrait}
-              alt="Megan, co-founder of The Matchbook Collective"
-              class="megan-portrait"
+              src={founder.name === 'Megan' ? meganPortrait : heatherPortrait}
+              alt={`${founder.name}, co-founder of The Matchbook Collective`}
+              class="founder-portrait"
               widths={[360, 600, 900]}
               sizes="(max-width: 600px) calc(100vw - 48px), 420px"
               width={600}
@@ -174,7 +175,7 @@ const founders = founderData.map((founder) =>
 </Base>
 
 <style>
-  .megan-portrait {
+  .founder-portrait {
     display: block;
     width: 100%;
     max-width: 420px;
